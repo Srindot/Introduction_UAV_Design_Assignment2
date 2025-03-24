@@ -1,0 +1,32 @@
+{
+    "name": "UAV Assignment Q2",
+    "image": "ros2gzpx4:latest",
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python",
+        "esbenp.prettier-vscode"
+    ],
+    "mounts": [
+        "source=/home/stimp/academics/intro_uav/assignments/assignment2,target=/workspace,type=bind",
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+        "source=/home/stimp/.Xauthority,target=/root/.Xauthority,type=bind",
+        "source=/run/user/1000/pulse/native,target=/run/user/1000/pulse/native,type=bind"
+    ],
+    "containerEnv": {
+        "DISPLAY": ":0",
+        "PULSE_SERVER": "unix:/run/user/1000/pulse/native",
+        "XDG_RUNTIME_DIR": "/tmp/runtime-rosusr"
+    },
+    "runArgs": [
+        "--privileged",
+        "--device=/dev/snd",
+        "--group-add=audio",
+        "--net=host"
+    ],
+    "remoteUser": "rosusr",
+    "overrideCommand": false,
+    "postStartCommand": "/usr/local/bin/QGroundControl"
+}
