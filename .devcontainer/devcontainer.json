@@ -1,32 +1,50 @@
 {
     "name": "UAV Assignment Q2",
-    "image": "ros2gzpx4:latest",
-    "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-    },
-    "extensions": [
-        "ms-vscode.cpptools",
-        "ms-python.python",
-        "esbenp.prettier-vscode"
-    ],
-    "mounts": [
-        "source=/home/stimp/academics/intro_uav/assignments/assignment2,target=/workspace,type=bind",
-        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
-        "source=/home/stimp/.Xauthority,target=/root/.Xauthority,type=bind",
-        "source=/run/user/1000/pulse/native,target=/run/user/1000/pulse/native,type=bind"
-    ],
-    "containerEnv": {
-        "DISPLAY": ":0",
-        "PULSE_SERVER": "unix:/run/user/1000/pulse/native",
-        "XDG_RUNTIME_DIR": "/tmp/runtime-rosusr"
-    },
-    "runArgs": [
-        "--privileged",
-        "--device=/dev/snd",
-        "--group-add=audio",
-        "--net=host"
-    ],
+    "privileged": true,
     "remoteUser": "rosusr",
-    "overrideCommand": false,
-    "postStartCommand": "/usr/local/bin/QGroundControl"
+    "image": "rosgzpx4:latest",
+
+    "workspaceFolder": "/workspace",
+    "workspaceMount": "type=bind,source=/home/stimp/academics/intro_uav/assignments/assignment2,target=/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-python.python",
+                "esbenp.prettier-vscode",
+                "eamodio.gitlens",
+                "ms-iot.vscode-ros"
+            ]
+        }
+    },
+
+    "containerEnv": {
+        "DISPLAY": "${localEnv:DISPLAY}",
+        "PULSE_SERVER": "unix:/run/user/1000/pulse/native"
+    },
+
+    "runArgs": [
+        "--net=host",
+        "--privileged",
+        "-e", "DISPLAY=${localEnv:DISPLAY}",
+        "-e", "PULSE_SERVER=unix:/run/user/$(id -u)/pulse/native",
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+        "--volume=/run/user/$(id -u)/pulse/native:/run/user/$(id -u)/pulse/native",
+        "--volume=${localEnv:XAUTHORITY}:/root/.Xauthority:ro",
+        "--device=/dev/snd",
+        "--group-add=audio"
+    ],
+
+    "initializeCommand": "mkdir -p /run/user/1000 && chmod 700 /run/user/1000",
+    "postCreateCommand": "/usr/local/bin/QGroundControl",
+    "features": {
+    },
+
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "/home/stimp/.vscode",
+            "target": "/home/rosusr/.vscode"
+        }
+    ]
 }
