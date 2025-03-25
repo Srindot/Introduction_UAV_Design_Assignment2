@@ -2,7 +2,14 @@
     "name": "UAV Assignment Q2",
     "privileged": true,
     "remoteUser": "rosusr",
-    "image": "rosgzpx4:latest",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "USERNAME": "rosusr",
+            "ROS_DISTRO": "humble"
+        }
+    },
 
     "workspaceFolder": "/workspace",
     "workspaceMount": "type=bind,source=/home/stimp/academics/intro_uav/assignments/assignment2,target=/workspace",
@@ -37,8 +44,7 @@
 
     "initializeCommand": "mkdir -p /run/user/1000 && chmod 700 /run/user/1000",
     "postCreateCommand": "/usr/local/bin/QGroundControl",
-    "features": {
-    },
+    "features": {},
 
     "mounts": [
         {
