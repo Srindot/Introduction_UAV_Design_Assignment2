@@ -10,7 +10,6 @@
             "ROS_DISTRO": "humble"
         }
     },
-
     "workspaceFolder": "/workspace",
     "workspaceMount": "type=bind,source=/home/stimp/academics/intro_uav/assignments/assignment2,target=/workspace",
     "customizations": {
@@ -24,28 +23,20 @@
             ]
         }
     },
-
     "containerEnv": {
-        "DISPLAY": "${localEnv:DISPLAY}",
-        "PULSE_SERVER": "unix:/run/user/1000/pulse/native"
+        "DISPLAY": ":0",
+        "QT_QPA_PLATFORM": "xcb"
     },
-
     "runArgs": [
         "--net=host",
         "--privileged",
         "-e", "DISPLAY=${localEnv:DISPLAY}",
-        "-e", "PULSE_SERVER=unix:/run/user/$(id -u)/pulse/native",
-        "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
-        "--volume=/run/user/$(id -u)/pulse/native:/run/user/$(id -u)/pulse/native",
-        "--volume=${localEnv:XAUTHORITY}:/root/.Xauthority:ro",
-        "--device=/dev/snd",
-        "--group-add=audio"
+        "-e", "QT_QPA_PLATFORM=xcb",
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
     ],
-
-    "initializeCommand": "mkdir -p /run/user/1000 && chmod 700 /run/user/1000",
-    "postCreateCommand": "/usr/local/bin/QGroundControl",
+    "initializeCommand": "",
+    "postCreateCommand": "",
     "features": {},
-
     "mounts": [
         {
             "type": "bind",
