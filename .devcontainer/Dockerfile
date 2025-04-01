@@ -33,5 +33,8 @@ RUN mkdir -p ~/ws_offboard_control/src && \
     colcon build && \
     . install/local_setup.bash
 
+RUN sudo pip install git+https://github.com/fishros/ros2bag_convert.git
+
+
 # Set the default command to open a bash shell
 CMD ["bash"]
